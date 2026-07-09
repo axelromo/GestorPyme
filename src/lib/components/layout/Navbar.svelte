@@ -11,7 +11,7 @@
 	let { user, onMenuToggle = () => {}, nombreEmpresa = null } = $props();
 </script>
 
-<header class="navbar">
+<header class="navbar" aria-label="Barra de navegación">
 	<button type="button" class="menu-btn" aria-label="Abrir menú" onclick={onMenuToggle}>
 		<span></span>
 		<span></span>
@@ -38,7 +38,7 @@
 
 	<div class="user-menu">
 		{#if user.imageUrl}
-			<img class="avatar" src={user.imageUrl} alt="" />
+			<img class="avatar" src={user.imageUrl} alt="Avatar de {user.nombre}" />
 		{:else}
 			<div class="avatar avatar-fallback" aria-hidden="true">
 				{user.nombre.charAt(0).toUpperCase()}
@@ -61,12 +61,13 @@
 		z-index: 20;
 		display: flex;
 		align-items: center;
-		gap: 0.75rem;
+		gap: 0.625rem;
 		height: var(--navbar-height);
-		padding: 0 1rem;
-		background: var(--color-surface);
+		padding: 0 0.875rem;
+		background: rgba(255, 255, 255, 0.92);
 		border-bottom: 1px solid var(--color-border);
-		box-shadow: var(--shadow-sm);
+		box-shadow: var(--shadow-navbar);
+		backdrop-filter: blur(8px);
 	}
 
 	.menu-btn {
@@ -83,6 +84,11 @@
 		cursor: pointer;
 		transition: background var(--transition);
 		flex-shrink: 0;
+	}
+
+	.menu-btn:focus-visible {
+		outline: 2px solid var(--color-primary);
+		outline-offset: 2px;
 	}
 
 	.menu-btn span {
@@ -155,8 +161,8 @@
 	}
 
 	.avatar {
-		width: 2.25rem;
-		height: 2.25rem;
+		width: 2rem;
+		height: 2rem;
 		border-radius: 50%;
 		object-fit: cover;
 		flex-shrink: 0;

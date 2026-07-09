@@ -42,7 +42,7 @@
 		align-items: center;
 		justify-content: center;
 		gap: 0.5rem;
-		padding: 0.75rem 1.25rem;
+		padding: 0.6875rem 1.125rem;
 		border-radius: var(--radius-sm);
 		font-size: 0.875rem;
 		font-weight: 600;
@@ -52,10 +52,10 @@
 		font-family: inherit;
 		white-space: nowrap;
 		transition:
-			background var(--transition),
-			border-color var(--transition),
-			box-shadow var(--transition),
-			transform var(--transition);
+			background var(--transition-fast),
+			border-color var(--transition-fast),
+			box-shadow var(--transition-fast),
+			transform var(--transition-fast);
 	}
 
 	.btn:hover:not(:disabled) {

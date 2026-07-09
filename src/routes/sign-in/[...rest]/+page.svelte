@@ -8,7 +8,15 @@
 		'Pagos',
 		'Cobranza'
 	];
+
+	const metaDescription =
+		'Inicia sesión en GestorPyme para administrar clientes, cotizaciones, pagos y cobranza de tu PYME.';
 </script>
+
+<svelte:head>
+	<title>Iniciar sesión · GestorPyme</title>
+	<meta name="description" content={metaDescription} />
+</svelte:head>
 
 <div class="auth-page">
 	<section class="auth-brand" aria-label="Presentación de GestorPyme">

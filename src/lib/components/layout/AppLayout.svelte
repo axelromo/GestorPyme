@@ -1,6 +1,8 @@
 <script>
+	import { page } from '$app/state';
 	import Sidebar from './Sidebar.svelte';
 	import Navbar from './Navbar.svelte';
+	import AppFooter from './AppFooter.svelte';
 
 	/**
 	 * @type {{
@@ -26,15 +28,23 @@
 	<Sidebar open={sidebarOpen} onClose={closeSidebar} {nombreEmpresa} />
 
 	{#if sidebarOpen}
-		<button type="button" class="overlay" aria-label="Cerrar menú" onclick={closeSidebar}></button>
+		<button
+			type="button"
+			class="overlay overlay-visible"
+			aria-label="Cerrar menú de navegación"
+			onclick={closeSidebar}
+		></button>
 	{/if}
 
 	<div class="app-main">
 		<Navbar {user} {nombreEmpresa} onMenuToggle={toggleSidebar} />
 
-		<main class="app-content">
-			{@render children()}
-		</main>
+		{#key page.url.pathname}
+			<main class="app-content page-enter" id="contenido-principal">
+				{@render children()}
+				<AppFooter />
+			</main>
+		{/key}
 	</div>
 </div>
 
@@ -52,9 +62,19 @@
 		z-index: 30;
 		border: none;
 		padding: 0;
-		background: rgba(15, 23, 42, 0.5);
-		backdrop-filter: blur(2px);
+		background: rgba(15, 23, 42, 0.45);
+		backdrop-filter: blur(3px);
 		cursor: pointer;
+		animation: overlay-in var(--transition) ease;
+	}
+
+	@keyframes overlay-in {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
 	}
 
 	.app-main {
@@ -67,12 +87,29 @@
 
 	.app-content {
 		flex: 1;
-		padding: 1rem 0.75rem;
+		display: flex;
+		flex-direction: column;
+		padding: 0.875rem 0.75rem 0.5rem;
 		max-width: 90rem;
 		width: 100%;
 		margin: 0 auto;
 		min-width: 0;
 		overflow-x: hidden;
+	}
+
+	.page-enter {
+		animation: page-enter var(--transition) ease;
+	}
+
+	@keyframes page-enter {
+		from {
+			opacity: 0;
+			transform: translateY(4px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 
 	@media (min-width: 768px) {
@@ -85,13 +122,20 @@
 		}
 
 		.app-content {
-			padding: 2rem 1.75rem;
+			padding: 1.5rem 1.75rem 0.75rem;
 		}
 	}
 
 	@media (min-width: 1440px) {
 		.app-content {
-			padding: 2rem 2.5rem;
+			padding: 1.75rem 2.5rem 1rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.page-enter,
+		.overlay {
+			animation: none;
 		}
 	}
 </style>

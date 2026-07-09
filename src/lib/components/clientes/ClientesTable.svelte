@@ -243,13 +243,11 @@
 				<MobileDataRow label="Cliente">{cliente.nombre}</MobileDataRow>
 				<MobileDataRow label="Empresa">{mostrarValor(cliente.empresa)}</MobileDataRow>
 				<MobileDataRow label="Correo">{cliente.email}</MobileDataRow>
-				<MobileDataRow label="Teléfono">{mostrarValor(cliente.telefono)}</MobileDataRow>
 				<MobileDataRow label="Estado">
 					<Badge tone={cliente.activo ? 'success' : 'danger'}>
 						{cliente.activo ? 'Activo' : 'Inactivo'}
 					</Badge>
 				</MobileDataRow>
-				<MobileDataRow label="Registro">{formatFecha(cliente.createdAt)}</MobileDataRow>
 			{/snippet}
 			{#snippet actions()}
 				<a class="btn-link" href="/clientes/{cliente.id}">Ver perfil</a>

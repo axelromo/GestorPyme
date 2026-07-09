@@ -27,7 +27,7 @@
 	const tipoIcono = $derived(iconos[titulo] ?? 'chart');
 </script>
 
-<article class="card" class:destacado>
+<article class="card" class:destacado aria-label="{titulo}: {valor}">
 	<div class="card-top">
 		<div class="icon-wrap icon-{tipoIcono}" aria-hidden="true">
 			{#if tipoIcono === 'users'}
@@ -66,22 +66,23 @@
 	.card {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
-		padding: 1.5rem;
+		gap: 0.375rem;
+		padding: 1.125rem;
 		background: var(--color-surface);
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius-card);
 		box-shadow: var(--shadow-sm);
-		min-height: 8rem;
+		min-height: 6rem;
+		cursor: default;
 		transition:
-			box-shadow var(--transition),
-			transform var(--transition),
-			border-color var(--transition);
+			box-shadow var(--transition-fast),
+			transform var(--transition-fast),
+			border-color var(--transition-fast);
 	}
 
 	.card:hover {
 		box-shadow: var(--shadow-md);
-		transform: translateY(-2px);
+		transform: translateY(-1px);
 		border-color: #cbd5e1;
 	}
 
@@ -93,22 +94,22 @@
 	.card-top {
 		display: flex;
 		align-items: center;
-		gap: 0.75rem;
+		gap: 0.625rem;
 	}
 
 	.icon-wrap {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 2.5rem;
-		height: 2.5rem;
+		width: 2rem;
+		height: 2rem;
 		border-radius: var(--radius-sm);
 		flex-shrink: 0;
 	}
 
 	.icon-wrap svg {
-		width: 1.25rem;
-		height: 1.25rem;
+		width: 1.125rem;
+		height: 1.125rem;
 	}
 
 	.icon-users,
@@ -141,49 +142,67 @@
 
 	.card-label {
 		margin: 0;
-		font-size: 0.8125rem;
+		font-size: 0.75rem;
 		font-weight: 600;
 		color: var(--color-text-muted);
 		text-transform: uppercase;
 		letter-spacing: 0.04em;
+		line-height: 1.3;
 	}
 
 	.card-value {
 		margin: 0;
-		font-size: 2rem;
+		font-size: 1.625rem;
 		font-weight: 700;
-		line-height: 1.1;
+		line-height: 1.15;
 		color: var(--color-text);
 		letter-spacing: -0.03em;
 	}
 
 	.card-description {
 		margin: 0;
-		font-size: 0.8125rem;
+		font-size: 0.75rem;
 		color: var(--color-text-muted);
-		line-height: 1.5;
+		line-height: 1.45;
 	}
 
 	.card-detail {
-		margin: 0.5rem 0 0;
+		margin: 0.375rem 0 0;
 		padding: 0;
 		list-style: none;
 		display: grid;
-		gap: 0.35rem;
+		gap: 0.3rem;
 		border-top: 1px solid var(--color-border);
-		padding-top: 0.75rem;
+		padding-top: 0.625rem;
 	}
 
 	.card-detail li {
 		display: flex;
 		justify-content: space-between;
 		gap: 0.75rem;
-		font-size: 0.8125rem;
+		font-size: 0.75rem;
 		color: var(--color-text-muted);
 	}
 
 	.card-detail strong {
 		color: var(--color-text);
 		font-weight: 600;
+	}
+
+	@media (max-width: 767px) {
+		.card {
+			padding: 1rem;
+			min-height: auto;
+		}
+
+		.card-value {
+			font-size: 1.5rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.card:hover {
+			transform: none;
+		}
 	}
 </style>

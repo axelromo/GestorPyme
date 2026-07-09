@@ -86,11 +86,13 @@
 		background: var(--color-sidebar);
 		border-right: 1px solid rgba(255, 255, 255, 0.06);
 		transform: translateX(-100%);
-		transition: transform 0.25s ease;
+		transition: transform var(--transition) cubic-bezier(0.4, 0, 0.2, 1);
+		will-change: transform;
 	}
 
 	.sidebar.open {
 		transform: translateX(0);
+		box-shadow: 8px 0 32px rgba(15, 23, 42, 0.25);
 	}
 
 	.sidebar-brand {
@@ -243,9 +245,20 @@
 		outline-offset: 2px;
 	}
 
+	.sidebar-nav a:focus-visible {
+		outline: 2px solid var(--color-primary);
+		outline-offset: 2px;
+	}
+
+	.close-btn:focus-visible {
+		outline: 2px solid var(--color-primary);
+		outline-offset: 2px;
+	}
+
 	@media (min-width: 768px) {
 		.sidebar {
 			transform: translateX(0);
+			box-shadow: none;
 		}
 
 		.close-btn {
