@@ -3,6 +3,8 @@
 	import Badge from '$lib/components/ui/Badge.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import EmptyState from '$lib/components/ui/EmptyState.svelte';
+	import MobileDataCard from '$lib/components/ui/MobileDataCard.svelte';
+	import MobileDataRow from '$lib/components/ui/MobileDataRow.svelte';
 	import { formatearMoneda } from '$lib/cotizaciones/calculos.js';
 
 	let { data } = $props();
@@ -78,7 +80,7 @@
 				mensaje="Este cliente aún no tiene cotizaciones registradas."
 			/>
 		{:else}
-			<div class="table-wrapper">
+			<div class="table-wrapper table-desktop">
 				<table class="table">
 					<thead>
 						<tr>
@@ -105,6 +107,28 @@
 						{/each}
 					</tbody>
 				</table>
+			</div>
+
+			<div class="mobile-card-list">
+				{#each data.cotizaciones as cotizacion (cotizacion.id)}
+					<MobileDataCard>
+						{#snippet children()}
+							<MobileDataRow label="Folio">
+								<a class="folio-link" href="/cotizaciones/{cotizacion.id}">{cotizacion.folio}</a>
+							</MobileDataRow>
+							<MobileDataRow label="Fecha">{formatFecha(cotizacion.fecha)}</MobileDataRow>
+							<MobileDataRow label="Estado">{cotizacion.estadoEtiqueta}</MobileDataRow>
+							<MobileDataRow label="Total">{formatearMoneda(cotizacion.total)}</MobileDataRow>
+							<MobileDataRow label="Pagado">{formatearMoneda(cotizacion.pagado)}</MobileDataRow>
+							<MobileDataRow label="Saldo" highlight={cotizacion.saldo > 0}>
+								{formatearMoneda(cotizacion.saldo)}
+							</MobileDataRow>
+						{/snippet}
+						{#snippet actions()}
+							<a class="folio-link btn-link" href="/cotizaciones/{cotizacion.id}">Ver cotización</a>
+						{/snippet}
+					</MobileDataCard>
+				{/each}
 			</div>
 		{/if}
 	</article>
@@ -151,10 +175,29 @@
 		align-items: center;
 	}
 
-	.cards-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-		gap: 1rem;
+	.folio-link {
+		color: var(--color-primary);
+		font-weight: 600;
+		text-decoration: none;
+	}
+
+	.folio-link:hover {
+		text-decoration: underline;
+	}
+
+	.btn-link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.625rem 1rem;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		background: var(--color-surface);
+		text-decoration: none;
+	}
+
+	.btn-link:hover {
+		background: var(--color-surface-hover);
 	}
 
 	.saldo {

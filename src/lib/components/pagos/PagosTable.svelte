@@ -2,6 +2,8 @@
 	import { enhance } from '$app/forms';
 	import EstadoPagoBadge from '$lib/components/pagos/EstadoPagoBadge.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import MobileDataCard from '$lib/components/ui/MobileDataCard.svelte';
+	import MobileDataRow from '$lib/components/ui/MobileDataRow.svelte';
 	import ModalConfirm from '$lib/components/ui/ModalConfirm.svelte';
 	import TableSortLink from '$lib/components/ui/TableSortLink.svelte';
 	import { ETIQUETAS_METODO } from '$lib/validaciones/pago.js';
@@ -81,7 +83,7 @@
 	onCancelar={() => (pagoAEliminar = null)}
 />
 
-<div class="table-wrapper">
+<div class="table-wrapper table-desktop">
 	<table class="table">
 		<thead>
 			<tr>
@@ -160,6 +162,28 @@
 	</table>
 </div>
 
+<div class="mobile-card-list">
+	{#each pagos as pago (pago.id)}
+		<MobileDataCard>
+			{#snippet children()}
+				<MobileDataRow label="Fecha">{formatFecha(pago.fecha)}</MobileDataRow>
+				<MobileDataRow label="Cotización">{pago.folio}</MobileDataRow>
+				<MobileDataRow label="Cliente">{pago.clienteNombre}</MobileDataRow>
+				<MobileDataRow label="Método">{etiquetaMetodo(pago.metodo)}</MobileDataRow>
+				<MobileDataRow label="Monto">{formatearMoneda(pago.monto)}</MobileDataRow>
+				<MobileDataRow label="Referencia">{mostrarValor(pago.referencia)}</MobileDataRow>
+				<MobileDataRow label="Estado">
+					<EstadoPagoBadge estado={pago.estadoPago} />
+				</MobileDataRow>
+			{/snippet}
+			{#snippet actions()}
+				<a class="btn-link" href="/pagos/{pago.id}/editar">Editar</a>
+				<Button variant="danger" onclick={() => (pagoAEliminar = pago)}>Eliminar</Button>
+			{/snippet}
+		</MobileDataCard>
+	{/each}
+</div>
+
 <style>
 	.hidden-form {
 		display: none;
@@ -188,5 +212,14 @@
 
 	.btn-link:hover {
 		background: var(--color-surface-hover);
+	}
+
+	.btn-link:focus-visible {
+		outline: 2px solid var(--color-primary);
+		outline-offset: 2px;
+	}
+
+	.btn-link:active {
+		transform: scale(0.98);
 	}
 </style>

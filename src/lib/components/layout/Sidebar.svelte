@@ -1,5 +1,6 @@
 <script>
 	import { page } from '$app/state';
+	import { SignOutButton } from 'svelte-clerk';
 	import { NAV_ICONS } from './nav-icons.js';
 
 	/** @type {{ open: boolean, onClose: () => void, nombreEmpresa?: string | null }} */
@@ -59,6 +60,17 @@
 			{/each}
 		</ul>
 	</nav>
+
+	<div class="sidebar-footer">
+		<SignOutButton class="sidebar-sign-out" redirectUrl="/sign-in">
+			<span class="nav-icon" aria-hidden="true">
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+				</svg>
+			</span>
+			<span class="nav-label">Cerrar sesión</span>
+		</SignOutButton>
+	</div>
 </aside>
 
 <style>
@@ -196,12 +208,51 @@
 		height: 100%;
 	}
 
+	.sidebar-footer {
+		padding: 0.75rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	:global(.sidebar-sign-out) {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		width: 100%;
+		padding: 0.75rem 1rem;
+		border: none;
+		border-radius: var(--radius-sm);
+		background: transparent;
+		color: rgba(255, 255, 255, 0.65);
+		font-size: 0.9375rem;
+		font-weight: 500;
+		font-family: inherit;
+		text-align: left;
+		cursor: pointer;
+		transition:
+			background var(--transition),
+			color var(--transition);
+	}
+
+	:global(.sidebar-sign-out:hover) {
+		background: var(--color-sidebar-hover);
+		color: #ffffff;
+	}
+
+	:global(.sidebar-sign-out:focus-visible) {
+		outline: 2px solid var(--color-primary);
+		outline-offset: 2px;
+	}
+
 	@media (min-width: 768px) {
 		.sidebar {
 			transform: translateX(0);
 		}
 
 		.close-btn {
+			display: none;
+		}
+
+		.sidebar-footer {
 			display: none;
 		}
 	}

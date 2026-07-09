@@ -108,7 +108,7 @@
 	.dashboard {
 		display: flex;
 		flex-direction: column;
-		gap: 1.5rem;
+		gap: 1.25rem;
 		min-width: 0;
 	}
 
@@ -132,27 +132,13 @@
 		font-size: 0.875rem;
 	}
 
-	.cards-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-		gap: 1rem;
-	}
+	@media (max-width: 767px) {
+		.dashboard {
+			gap: 1rem;
+		}
 
-	.charts-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-		gap: 1rem;
-	}
-
-	.widgets-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-		gap: 1rem;
-	}
-
-	@media (min-width: 64rem) {
-		.charts-grid {
-			grid-template-columns: 1.4fr 1fr;
+		.dashboard-header h1 {
+			font-size: 1.375rem;
 		}
 	}
 </style>

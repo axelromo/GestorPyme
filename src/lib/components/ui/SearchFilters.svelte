@@ -58,8 +58,8 @@
 
 	.search-wrap {
 		position: relative;
-		flex: 1;
-		min-width: 14rem;
+		flex: 1 1 100%;
+		min-width: 0;
 	}
 
 	.search-icon {
@@ -76,5 +76,12 @@
 	.search-wrap input {
 		width: 100%;
 		padding-left: 2.5rem;
+	}
+
+	@media (min-width: 768px) {
+		.search-wrap {
+			flex: 1;
+			min-width: 14rem;
+		}
 	}
 </style>

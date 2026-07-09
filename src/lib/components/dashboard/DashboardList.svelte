@@ -1,4 +1,7 @@
 <script>
+	import MobileDataCard from '$lib/components/ui/MobileDataCard.svelte';
+	import MobileDataRow from '$lib/components/ui/MobileDataRow.svelte';
+
 	/**
 	 * @type {{
 	 *   titulo: string,
@@ -15,7 +18,7 @@
 	{#if filas.length === 0}
 		<p class="vacio">{vacio}</p>
 	{:else}
-		<div class="table-wrapper">
+		<div class="table-wrapper table-desktop">
 			<table class="table">
 				<thead>
 					<tr>
@@ -41,6 +44,24 @@
 				</tbody>
 			</table>
 		</div>
+
+		<div class="mobile-card-list">
+			{#each filas as fila, indice (indice)}
+				<MobileDataCard>
+					{#snippet children()}
+						{#each columnas as columna (columna.clave)}
+							<MobileDataRow label={columna.etiqueta}>
+								{#if fila[`${columna.clave}Href`]}
+									<a href={fila[`${columna.clave}Href`]}>{fila[columna.clave]}</a>
+								{:else}
+									{fila[columna.clave]}
+								{/if}
+							</MobileDataRow>
+						{/each}
+					{/snippet}
+				</MobileDataCard>
+			{/each}
+		</div>
 	{/if}
 </article>
 
@@ -52,6 +73,7 @@
 		border-radius: var(--radius-card);
 		box-shadow: var(--shadow-sm);
 		transition: box-shadow var(--transition);
+		min-width: 0;
 	}
 
 	.widget:hover {
@@ -75,5 +97,16 @@
 	td.align-right,
 	th.align-right {
 		text-align: right;
+	}
+
+	@media (max-width: 767px) {
+		.widget {
+			padding: 1.125rem;
+		}
+
+		h2 {
+			margin-bottom: 1rem;
+			font-size: 0.9375rem;
+		}
 	}
 </style>

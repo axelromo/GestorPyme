@@ -18,11 +18,22 @@
 		<span></span>
 	</button>
 
-	<div class="navbar-start">
-		<span class="navbar-title">GestorPyme</span>
-		{#if nombreEmpresa?.trim()}
-			<span class="navbar-empresa">{nombreEmpresa}</span>
-		{/if}
+	<div class="navbar-brand">
+		<div class="logo" aria-hidden="true">
+			<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<rect width="32" height="32" rx="8" fill="#2563EB" />
+				<path
+					d="M8 22V10h4.2l3.4 7.2L19 10h4v12h-3.2v-7.4L15.8 22h-2.6L10.2 14.6V22H8Z"
+					fill="white"
+				/>
+			</svg>
+		</div>
+		<div class="navbar-start">
+			<span class="navbar-title">GestorPyme</span>
+			{#if nombreEmpresa?.trim()}
+				<span class="navbar-empresa">{nombreEmpresa}</span>
+			{/if}
+		</div>
 	</div>
 
 	<div class="user-menu">
@@ -39,17 +50,20 @@
 			<span class="user-email">{user.email}</span>
 		</div>
 
-		<SignOutButton class="sign-out-btn">Cerrar sesión</SignOutButton>
+		<SignOutButton class="sign-out-btn" redirectUrl="/sign-in">Cerrar sesión</SignOutButton>
 	</div>
 </header>
 
 <style>
 	.navbar {
+		position: sticky;
+		top: 0;
+		z-index: 20;
 		display: flex;
 		align-items: center;
-		gap: 1rem;
+		gap: 0.75rem;
 		height: var(--navbar-height);
-		padding: 0 1.5rem;
+		padding: 0 1rem;
 		background: var(--color-surface);
 		border-bottom: 1px solid var(--color-border);
 		box-shadow: var(--shadow-sm);
@@ -68,6 +82,7 @@
 		background: transparent;
 		cursor: pointer;
 		transition: background var(--transition);
+		flex-shrink: 0;
 	}
 
 	.menu-btn span {
@@ -79,6 +94,29 @@
 
 	.menu-btn:hover {
 		background: var(--color-surface-hover);
+	}
+
+	.menu-btn:active {
+		transform: scale(0.96);
+	}
+
+	.navbar-brand {
+		display: flex;
+		align-items: center;
+		gap: 0.625rem;
+		min-width: 0;
+		flex: 1;
+	}
+
+	.logo {
+		flex-shrink: 0;
+		width: 2rem;
+		height: 2rem;
+	}
+
+	.logo svg {
+		width: 100%;
+		height: 100%;
 	}
 
 	.navbar-start {
@@ -93,6 +131,9 @@
 		font-size: 0.9375rem;
 		color: var(--color-text);
 		letter-spacing: -0.02em;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	.navbar-empresa {
@@ -107,14 +148,15 @@
 	.user-menu {
 		display: flex;
 		align-items: center;
-		gap: 0.875rem;
+		gap: 0.75rem;
 		margin-left: auto;
 		min-width: 0;
+		flex-shrink: 0;
 	}
 
 	.avatar {
-		width: 2.5rem;
-		height: 2.5rem;
+		width: 2.25rem;
+		height: 2.25rem;
 		border-radius: 50%;
 		object-fit: cover;
 		flex-shrink: 0;
@@ -128,7 +170,7 @@
 		background: var(--color-primary-soft);
 		color: var(--color-primary);
 		font-weight: 700;
-		font-size: 0.875rem;
+		font-size: 0.8125rem;
 	}
 
 	.user-info {
@@ -167,7 +209,8 @@
 		white-space: nowrap;
 		transition:
 			background var(--transition),
-			border-color var(--transition);
+			border-color var(--transition),
+			transform var(--transition);
 	}
 
 	:global(.sign-out-btn:hover) {
@@ -175,25 +218,55 @@
 		border-color: #cbd5e1;
 	}
 
-	@media (min-width: 640px) {
+	:global(.sign-out-btn:active) {
+		transform: scale(0.98);
+	}
+
+	:global(.sign-out-btn:focus-visible) {
+		outline: 2px solid var(--color-primary);
+		outline-offset: 2px;
+	}
+
+	@media (min-width: 768px) {
+		.navbar {
+			padding: 0 1.5rem;
+			gap: 1rem;
+		}
+
+		.menu-btn {
+			display: none;
+		}
+
+		.logo {
+			width: 2.25rem;
+			height: 2.25rem;
+		}
+
+		.navbar-title {
+			font-size: 1rem;
+		}
+
+		.navbar-empresa {
+			font-size: 0.8125rem;
+		}
+
+		.avatar {
+			width: 2.5rem;
+			height: 2.5rem;
+		}
+
 		.user-info {
 			display: flex;
 		}
 	}
 
-	@media (min-width: 768px) {
-		.menu-btn {
-			display: none;
-		}
-
-		.navbar-title {
-			display: none;
-		}
-
+	@media (max-width: 767px) {
 		.navbar-empresa {
-			font-size: 0.875rem;
-			font-weight: 600;
-			color: var(--color-text);
+			display: none;
+		}
+
+		:global(.sign-out-btn) {
+			display: none;
 		}
 	}
 </style>

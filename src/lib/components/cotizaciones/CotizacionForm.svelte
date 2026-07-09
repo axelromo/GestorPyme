@@ -288,4 +288,89 @@
 		font-size: 0.8125rem;
 		color: #dc2626;
 	}
+
+	@media (max-width: 767px) {
+		.grid {
+			grid-template-columns: 1fr;
+		}
+
+		.section-header {
+			flex-direction: column;
+			align-items: stretch;
+		}
+
+		.section-header :global(.btn-secondary),
+		.section-header .btn-secondary {
+			width: 100%;
+			justify-content: center;
+		}
+
+		.actions {
+			flex-direction: column;
+		}
+
+		.actions > * {
+			width: 100%;
+			justify-content: center;
+			text-align: center;
+		}
+
+		.table-wrapper {
+			overflow: visible;
+			border: none;
+			background: transparent;
+		}
+
+		.conceptos-table {
+			display: block;
+		}
+
+		.conceptos-table thead {
+			display: none;
+		}
+
+		.conceptos-table tbody {
+			display: flex;
+			flex-direction: column;
+			gap: 0.75rem;
+		}
+
+		.conceptos-table :global(tr) {
+			display: block;
+			padding: 1rem;
+			background: var(--color-surface);
+			border: 1px solid var(--color-border);
+			border-radius: var(--radius-md);
+			box-shadow: var(--shadow-sm);
+		}
+
+		.conceptos-table :global(td) {
+			display: block;
+			padding: 0.625rem 0;
+			border-bottom: none;
+		}
+
+		.conceptos-table :global(td::before) {
+			content: attr(data-label);
+			display: block;
+			margin-bottom: 0.375rem;
+			font-size: 0.6875rem;
+			font-weight: 600;
+			color: var(--color-text-muted);
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+		}
+
+		.conceptos-table :global(td.acciones) {
+			padding-top: 0.25rem;
+		}
+
+		.conceptos-table :global(.importe) {
+			font-size: 1rem;
+		}
+
+		.totales {
+			align-items: stretch;
+		}
+	}
 </style>

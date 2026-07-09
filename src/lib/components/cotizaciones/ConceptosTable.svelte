@@ -1,5 +1,7 @@
 <script>
 	import { formatearMoneda } from '$lib/cotizaciones/calculos.js';
+	import MobileDataCard from '$lib/components/ui/MobileDataCard.svelte';
+	import MobileDataRow from '$lib/components/ui/MobileDataRow.svelte';
 
 	/**
 	 * @type {{
@@ -19,7 +21,7 @@
 	let { conceptos, subtotal, iva, total, editable = false } = $props();
 </script>
 
-<div class="table-wrapper">
+<div class="table-wrapper table-desktop">
 	<table class="table">
 		<thead>
 			<tr>
@@ -62,6 +64,30 @@
 	</table>
 </div>
 
+<div class="mobile-card-list">
+	{#each conceptos as concepto, indice (indice)}
+		<MobileDataCard>
+			{#snippet children()}
+				<MobileDataRow label="Descripción">{concepto.descripcion}</MobileDataRow>
+				<MobileDataRow label="Cantidad">{concepto.cantidad}</MobileDataRow>
+				<MobileDataRow label="Precio unitario">{formatearMoneda(concepto.precioUnitario)}</MobileDataRow>
+				{#if editable}
+					<MobileDataRow label="Descuento">{formatearMoneda(concepto.descuento ?? 0)}</MobileDataRow>
+				{/if}
+				<MobileDataRow label="Importe">{formatearMoneda(concepto.importe)}</MobileDataRow>
+			{/snippet}
+		</MobileDataCard>
+	{/each}
+
+	<article class="mobile-data-card mobile-totals">
+		<div class="mobile-data-card-body">
+			<MobileDataRow label="Subtotal">{formatearMoneda(subtotal)}</MobileDataRow>
+			<MobileDataRow label="IVA">{formatearMoneda(iva)}</MobileDataRow>
+			<MobileDataRow label="Total">{formatearMoneda(total)}</MobileDataRow>
+		</div>
+	</article>
+</div>
+
 <style>
 	.table-wrapper {
 		overflow-x: auto;
@@ -102,5 +128,10 @@
 	.total {
 		font-weight: 700;
 		color: var(--color-text, #0f172a);
+	}
+
+	.mobile-totals {
+		background: var(--color-primary-soft);
+		border-color: #bfdbfe;
 	}
 </style>

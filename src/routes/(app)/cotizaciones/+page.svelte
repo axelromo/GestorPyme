@@ -3,6 +3,8 @@
 	import EstadoBadge from '$lib/components/cotizaciones/EstadoBadge.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import EmptyState from '$lib/components/ui/EmptyState.svelte';
+	import MobileDataCard from '$lib/components/ui/MobileDataCard.svelte';
+	import MobileDataRow from '$lib/components/ui/MobileDataRow.svelte';
 	import Pagination from '$lib/components/ui/Pagination.svelte';
 	import SearchFilters from '$lib/components/ui/SearchFilters.svelte';
 	import TableSortLink from '$lib/components/ui/TableSortLink.svelte';
@@ -78,7 +80,7 @@
 			icono="📄"
 		/>
 	{:else}
-		<div class="table-wrapper">
+		<div class="table-wrapper table-desktop">
 			<table class="table">
 				<thead>
 					<tr>
@@ -151,6 +153,26 @@
 				</tbody>
 			</table>
 		</div>
+
+		<div class="mobile-card-list">
+			{#each data.cotizaciones as cotizacion (cotizacion.id)}
+				<MobileDataCard>
+					{#snippet children()}
+						<MobileDataRow label="Folio">{cotizacion.folio}</MobileDataRow>
+						<MobileDataRow label="Cliente">{cotizacion.clienteNombre}</MobileDataRow>
+						<MobileDataRow label="Fecha">{formatFecha(cotizacion.fecha)}</MobileDataRow>
+						<MobileDataRow label="Estado">
+							<EstadoBadge estado={cotizacion.estado} />
+						</MobileDataRow>
+						<MobileDataRow label="Total">{formatearMoneda(cotizacion.total)}</MobileDataRow>
+					{/snippet}
+					{#snippet actions()}
+						<a class="link btn-link" href="/cotizaciones/{cotizacion.id}">Ver</a>
+					{/snippet}
+				</MobileDataCard>
+			{/each}
+		</div>
+
 		<Pagination pathname={page.url.pathname} paginacion={data.paginacion} params={paramsListado} />
 	{/if}
 </section>
@@ -209,5 +231,26 @@
 		color: var(--color-primary, #2563eb);
 		font-weight: 600;
 		text-decoration: none;
+	}
+
+	.btn-link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.625rem 1rem;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		background: var(--color-surface);
+		text-decoration: none;
+		transition: background var(--transition);
+	}
+
+	.btn-link:hover {
+		background: var(--color-surface-hover);
+	}
+
+	.btn-link:focus-visible {
+		outline: 2px solid var(--color-primary);
+		outline-offset: 2px;
 	}
 </style>

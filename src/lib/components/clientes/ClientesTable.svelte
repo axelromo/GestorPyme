@@ -3,6 +3,8 @@
 	import Badge from '$lib/components/ui/Badge.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import ModalConfirm from '$lib/components/ui/ModalConfirm.svelte';
+	import MobileDataCard from '$lib/components/ui/MobileDataCard.svelte';
+	import MobileDataRow from '$lib/components/ui/MobileDataRow.svelte';
 	import TableSortLink from '$lib/components/ui/TableSortLink.svelte';
 
 	/**
@@ -127,7 +129,7 @@
 	onCancelar={() => (clienteAActivar = null)}
 />
 
-<div class="table-wrapper">
+<div class="table-wrapper table-desktop">
 	<table class="table">
 		<thead>
 			<tr>
@@ -210,7 +212,21 @@
 								Activar
 							</Button>
 						{/if}
-						{#if !cliente.tieneCotizaciones}
+						{#if cliente.tieneCotizaciones}
+							<div class="eliminar-bloqueado">
+								<span
+									class="tooltip-wrap"
+									title="No se puede eliminar porque el cliente tiene cotizaciones registradas."
+									aria-label="No se puede eliminar porque el cliente tiene cotizaciones registradas."
+								>
+									<Button variant="secondary" disabled>Eliminar</Button>
+									<span class="tooltip" role="tooltip">
+										No se puede eliminar porque el cliente tiene cotizaciones registradas.
+									</span>
+								</span>
+								<span class="leyenda">Cliente con historial.</span>
+							</div>
+						{:else}
 							<Button variant="danger" onclick={() => (clienteAEliminar = cliente)}>Eliminar</Button>
 						{/if}
 					</td>
@@ -218,6 +234,55 @@
 			{/each}
 		</tbody>
 	</table>
+</div>
+
+<div class="mobile-card-list">
+	{#each clientes as cliente (cliente.id)}
+		<MobileDataCard>
+			{#snippet children()}
+				<MobileDataRow label="Cliente">{cliente.nombre}</MobileDataRow>
+				<MobileDataRow label="Empresa">{mostrarValor(cliente.empresa)}</MobileDataRow>
+				<MobileDataRow label="Correo">{cliente.email}</MobileDataRow>
+				<MobileDataRow label="Teléfono">{mostrarValor(cliente.telefono)}</MobileDataRow>
+				<MobileDataRow label="Estado">
+					<Badge tone={cliente.activo ? 'success' : 'danger'}>
+						{cliente.activo ? 'Activo' : 'Inactivo'}
+					</Badge>
+				</MobileDataRow>
+				<MobileDataRow label="Registro">{formatFecha(cliente.createdAt)}</MobileDataRow>
+			{/snippet}
+			{#snippet actions()}
+				<a class="btn-link" href="/clientes/{cliente.id}">Ver perfil</a>
+				<a class="btn-link" href="/clientes/{cliente.id}/editar">Editar</a>
+				{#if cliente.activo}
+					<Button variant="secondary" onclick={() => (clienteADesactivar = cliente)}>
+						Desactivar
+					</Button>
+				{:else}
+					<Button variant="secondary" onclick={() => (clienteAActivar = cliente)}>
+						Activar
+					</Button>
+				{/if}
+				{#if cliente.tieneCotizaciones}
+					<div class="eliminar-bloqueado">
+						<span
+							class="tooltip-wrap"
+							title="No se puede eliminar porque el cliente tiene cotizaciones registradas."
+							aria-label="No se puede eliminar porque el cliente tiene cotizaciones registradas."
+						>
+							<Button variant="secondary" disabled>Eliminar</Button>
+							<span class="tooltip" role="tooltip">
+								No se puede eliminar porque el cliente tiene cotizaciones registradas.
+							</span>
+						</span>
+						<span class="leyenda">Cliente con historial.</span>
+					</div>
+				{:else}
+					<Button variant="danger" onclick={() => (clienteAEliminar = cliente)}>Eliminar</Button>
+				{/if}
+			{/snippet}
+		</MobileDataCard>
+	{/each}
 </div>
 
 <style>
@@ -229,6 +294,66 @@
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.5rem;
+		align-items: flex-start;
+		white-space: nowrap;
+	}
+
+	.eliminar-bloqueado {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.tooltip-wrap {
+		position: relative;
+		display: inline-flex;
+	}
+
+	.tooltip {
+		position: absolute;
+		bottom: calc(100% + 0.5rem);
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 10;
+		width: max-content;
+		max-width: 14rem;
+		padding: 0.5rem 0.75rem;
+		border-radius: var(--radius-sm);
+		background: var(--color-text);
+		color: #ffffff;
+		font-size: 0.75rem;
+		font-weight: 500;
+		line-height: 1.4;
+		text-align: center;
+		box-shadow: var(--shadow-md);
+		pointer-events: none;
+		opacity: 0;
+		visibility: hidden;
+		transition:
+			opacity var(--transition),
+			visibility var(--transition);
+	}
+
+	.tooltip::after {
+		content: '';
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		transform: translateX(-50%);
+		border: 0.35rem solid transparent;
+		border-top-color: var(--color-text);
+	}
+
+	.tooltip-wrap:hover .tooltip,
+	.tooltip-wrap:focus-within .tooltip {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	.leyenda {
+		font-size: 0.6875rem;
+		color: var(--color-text-muted);
+		font-weight: 500;
 		white-space: nowrap;
 	}
 
@@ -251,5 +376,18 @@
 	.btn-link:hover {
 		background: var(--color-surface-hover);
 		border-color: #cbd5e1;
+	}
+
+	.btn-link:focus-visible {
+		outline: 2px solid var(--color-primary);
+		outline-offset: 2px;
+	}
+
+	.btn-link:active {
+		transform: scale(0.98);
+	}
+
+	.eliminar-bloqueado {
+		width: 100%;
 	}
 </style>

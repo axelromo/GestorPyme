@@ -247,6 +247,12 @@
 		box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
 	}
 
+	.btn-primary:focus-visible,
+	.btn-secondary:focus-visible {
+		outline: 2px solid var(--color-primary);
+		outline-offset: 2px;
+	}
+
 	.btn-secondary {
 		border: 1px solid var(--color-border, #e2e8f0);
 		background: #ffffff;

@@ -42,6 +42,8 @@
 	.app-shell {
 		min-height: 100dvh;
 		background: var(--color-background);
+		overflow-x: hidden;
+		max-width: 100vw;
 	}
 
 	.overlay {
@@ -59,14 +61,18 @@
 		display: flex;
 		flex-direction: column;
 		min-height: 100dvh;
+		min-width: 0;
+		overflow-x: hidden;
 	}
 
 	.app-content {
 		flex: 1;
-		padding: 1.5rem 1rem;
+		padding: 1rem 0.75rem;
 		max-width: 90rem;
 		width: 100%;
 		margin: 0 auto;
+		min-width: 0;
+		overflow-x: hidden;
 	}
 
 	@media (min-width: 768px) {

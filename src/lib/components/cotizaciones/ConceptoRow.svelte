@@ -22,7 +22,7 @@
 </script>
 
 <tr>
-	<td>
+	<td data-label="Descripción">
 		<input
 			name={`conceptos[${indice}][descripcion]`}
 			type="text"
@@ -33,7 +33,7 @@
 			<p class="error">{errors[`conceptos[${indice}].descripcion`]}</p>
 		{/if}
 	</td>
-	<td>
+	<td data-label="Cantidad">
 		<input
 			name={`conceptos[${indice}][cantidad]`}
 			type="number"
@@ -45,7 +45,7 @@
 			<p class="error">{errors[`conceptos[${indice}].cantidad`]}</p>
 		{/if}
 	</td>
-	<td>
+	<td data-label="Precio unitario">
 		<input
 			name={`conceptos[${indice}][precioUnitario]`}
 			type="number"
@@ -57,7 +57,7 @@
 			<p class="error">{errors[`conceptos[${indice}].precioUnitario`]}</p>
 		{/if}
 	</td>
-	<td>
+	<td data-label="Descuento">
 		<input
 			name={`conceptos[${indice}][descuento]`}
 			type="number"
@@ -69,8 +69,8 @@
 			<p class="error">{errors[`conceptos[${indice}].descuento`]}</p>
 		{/if}
 	</td>
-	<td class="importe">{importe.toFixed(2)}</td>
-	<td class="acciones">
+	<td class="importe" data-label="Importe">{importe.toFixed(2)}</td>
+	<td class="acciones" data-label="Acciones">
 		{#if puedeEliminar}
 			<button class="btn-remove" type="button" onclick={onRemove}>Quitar</button>
 		{/if}
@@ -110,6 +110,22 @@
 		color: #b91c1c;
 		font-size: 0.8125rem;
 		cursor: pointer;
+		transition:
+			background var(--transition),
+			transform var(--transition);
+	}
+
+	.btn-remove:hover {
+		background: #ffe4e6;
+	}
+
+	.btn-remove:focus-visible {
+		outline: 2px solid var(--color-danger);
+		outline-offset: 2px;
+	}
+
+	.btn-remove:active {
+		transform: scale(0.98);
 	}
 
 	.error {

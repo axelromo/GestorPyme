@@ -82,6 +82,22 @@
 		box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 	}
 
+	.btn-primary:focus-visible,
+	.btn-secondary:focus-visible,
+	.btn-danger:focus-visible,
+	.btn-success:focus-visible {
+		outline: 2px solid var(--color-primary);
+		outline-offset: 2px;
+	}
+
+	.btn-danger:focus-visible {
+		outline-color: var(--color-danger);
+	}
+
+	.btn-success:focus-visible {
+		outline-color: var(--color-success);
+	}
+
 	.btn-success {
 		background: var(--color-success);
 		color: #ffffff;

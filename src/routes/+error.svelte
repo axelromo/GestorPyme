@@ -33,7 +33,7 @@
 		<p class="mensaje">{info.mensaje}</p>
 		<div class="actions">
 			<Button href="/dashboard" variant="primary">Ir al dashboard</Button>
-			<Button href="/" variant="secondary">Ir al inicio</Button>
+			<Button href="/sign-in" variant="secondary">Iniciar sesión</Button>
 		</div>
 	</div>
 </section>
