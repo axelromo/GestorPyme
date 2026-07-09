@@ -1,0 +1,154 @@
+generator client {
+	provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum EstadoCotizacion {
+	BORRADOR
+	ENVIADA
+	APROBADA
+	RECHAZADA
+	FACTURADA
+	PAGADA
+}
+
+enum MetodoPago {
+	EFECTIVO
+	TRANSFERENCIA
+	TARJETA
+	CHEQUE
+	OTRO
+}
+
+enum AccionHistorial {
+	CREADA
+	EDITADA
+	ENVIADA
+	APROBADA
+	RECHAZADA
+	FACTURADA
+	PAGO_REGISTRADO
+	CANCELADA
+}
+
+model Cliente {
+	id        String   @id @default(uuid()) @db.Uuid
+	nombre    String
+	empresa   String?
+	email     String
+	telefono  String?
+	direccion String?
+	rfc       String?
+	notas     String?
+	activo    Boolean  @default(true)
+	createdAt DateTime @default(now()) @map("created_at")
+	updatedAt DateTime @updatedAt @map("updated_at")
+
+	cotizaciones Cotizacion[]
+
+	@@index([email])
+	@@index([empresa])
+	@@index([activo])
+	@@map("clientes")
+}
+
+model Cotizacion {
+	id               String           @id @default(uuid()) @db.Uuid
+	folio            String           @unique
+	clienteId        String           @map("cliente_id") @db.Uuid
+	fecha            DateTime         @default(now())
+	fechaVencimiento DateTime?        @map("fecha_vencimiento")
+	moneda           String           @default("MXN")
+	tasaIVA          Decimal          @default(0.16) @map("tasa_iva") @db.Decimal(4, 2)
+	subtotal         Decimal          @db.Decimal(12, 2)
+	iva              Decimal          @db.Decimal(12, 2)
+	total            Decimal          @db.Decimal(12, 2)
+	estado           EstadoCotizacion @default(BORRADOR)
+	observaciones    String?
+	createdBy        String           @map("created_by")
+	createdAt        DateTime         @default(now()) @map("created_at")
+	updatedAt        DateTime         @updatedAt @map("updated_at")
+
+	cliente    Cliente     @relation(fields: [clienteId], references: [id], onDelete: Restrict)
+	conceptos  Concepto[]
+	pagos      Pago[]
+	historial  Historial[]
+
+	@@index([clienteId])
+	@@index([estado])
+	@@index([fecha])
+	@@map("cotizaciones")
+}
+
+model Concepto {
+	id             String  @id @default(uuid()) @db.Uuid
+	cotizacionId   String  @map("cotizacion_id") @db.Uuid
+	descripcion    String
+	cantidad       Decimal @db.Decimal(12, 4)
+	precioUnitario Decimal @map("precio_unitario") @db.Decimal(12, 2)
+	descuento      Decimal @default(0) @db.Decimal(12, 2)
+	importe        Decimal @db.Decimal(12, 2)
+	orden          Int     @default(1)
+
+	cotizacion Cotizacion @relation(fields: [cotizacionId], references: [id], onDelete: Cascade)
+
+	@@index([cotizacionId])
+	@@map("conceptos")
+}
+
+model Pago {
+	id           String     @id @default(uuid()) @db.Uuid
+	cotizacionId String     @map("cotizacion_id") @db.Uuid
+	fecha        DateTime   @default(now())
+	monto        Decimal    @db.Decimal(12, 2)
+	metodo       MetodoPago
+	referencia   String?
+	createdAt    DateTime   @default(now()) @map("created_at")
+	updatedAt    DateTime   @updatedAt @map("updated_at")
+
+	cotizacion Cotizacion @relation(fields: [cotizacionId], references: [id], onDelete: Restrict)
+
+	@@index([cotizacionId])
+	@@index([fecha])
+	@@map("pagos")
+}
+
+model Historial {
+	id           String          @id @default(uuid()) @db.Uuid
+	cotizacionId String          @map("cotizacion_id") @db.Uuid
+	accion       AccionHistorial
+	descripcion  String?
+	usuarioId    String          @map("usuario_id")
+	fecha        DateTime        @default(now())
+
+	cotizacion Cotizacion @relation(fields: [cotizacionId], references: [id], onDelete: Cascade)
+
+	@@index([cotizacionId])
+	@@index([fecha])
+	@@index([accion])
+	@@map("historial")
+}
+
+model ConfiguracionEmpresa {
+	id            String   @id @default(uuid()) @db.Uuid
+	nombreEmpresa String   @default("") @map("nombre_empresa")
+	razonSocial   String   @default("") @map("razon_social")
+	rfc           String?
+	correo        String?
+	telefono      String?
+	direccion     String?
+	ciudad        String?
+	estado        String?
+	codigoPostal  String?  @map("codigo_postal")
+	sitioWeb      String?  @map("sitio_web")
+	logo          String?
+	createdAt     DateTime @default(now()) @map("created_at")
+	updatedAt     DateTime @updatedAt @map("updated_at")
+
+	@@map("configuracion_empresa")
+}
