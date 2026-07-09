@@ -33,12 +33,10 @@
 		<EmptyState
 			titulo="Aún no hay datos"
 			mensaje="Comienza registrando tu primer cliente y creando cotizaciones para ver métricas aquí."
-			icono="📊"
-		/>
-		<div class="empty-actions">
+		>
 			<Button href="/clientes/nuevo">Registrar cliente</Button>
 			<Button href="/cotizaciones/nuevo" variant="secondary">Nueva cotización</Button>
-		</div>
+		</EmptyState>
 	{:else}
 		<div class="cards-grid">
 			<DashboardCard titulo="Total clientes" valor={String(metricas.totalClientes)} />
@@ -150,14 +148,6 @@
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
 		gap: 1rem;
-	}
-
-	.empty-actions {
-		display: flex;
-		gap: 0.75rem;
-		justify-content: center;
-		flex-wrap: wrap;
-		margin-top: -1rem;
 	}
 
 	@media (min-width: 64rem) {

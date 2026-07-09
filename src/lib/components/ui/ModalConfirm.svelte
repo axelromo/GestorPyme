@@ -43,8 +43,10 @@
 	.overlay {
 		position: fixed;
 		inset: 0;
-		background: rgba(15, 23, 42, 0.45);
+		background: rgba(15, 23, 42, 0.5);
+		backdrop-filter: blur(2px);
 		z-index: 40;
+		animation: fade-in 0.2s ease;
 	}
 
 	.modal {
@@ -53,27 +55,50 @@
 		left: 50%;
 		transform: translate(-50%, -50%);
 		z-index: 50;
-		width: min(24rem, calc(100vw - 2rem));
-		padding: 1.25rem;
-		background: #ffffff;
-		border-radius: 0.75rem;
-		box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
+		width: min(26rem, calc(100vw - 2rem));
+		padding: 1.5rem;
+		background: var(--color-surface);
+		border-radius: var(--radius-card);
+		box-shadow: var(--shadow-lg);
+		animation: modal-in 0.25s ease;
 	}
 
 	h2 {
 		margin: 0 0 0.5rem;
 		font-size: 1.125rem;
+		font-weight: 600;
 	}
 
 	p {
-		margin: 0 0 1.25rem;
-		color: var(--color-text-muted, #64748b);
+		margin: 0 0 1.5rem;
+		color: var(--color-text-muted);
 		font-size: 0.875rem;
+		line-height: 1.6;
 	}
 
 	.actions {
 		display: flex;
 		justify-content: flex-end;
 		gap: 0.75rem;
+	}
+
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes modal-in {
+		from {
+			opacity: 0;
+			transform: translate(-50%, -48%);
+		}
+		to {
+			opacity: 1;
+			transform: translate(-50%, -50%);
+		}
 	}
 </style>

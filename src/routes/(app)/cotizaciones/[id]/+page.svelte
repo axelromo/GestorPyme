@@ -59,7 +59,7 @@
 			>
 				<Button
 					type="submit"
-					variant="secondary"
+					variant="success"
 					loading={enviando}
 					disabled={!cotizacion.clienteEmail?.trim()}
 					title={cotizacion.clienteEmail?.trim()
@@ -219,13 +219,17 @@
 	.btn-primary,
 	.btn-secondary {
 		display: inline-flex;
-		padding: 0.625rem 1rem;
-		border-radius: 0.375rem;
+		align-items: center;
+		padding: 0.75rem 1.25rem;
+		border-radius: var(--radius-sm);
 		font-weight: 600;
 		text-decoration: none;
 		font-size: inherit;
 		font-family: inherit;
 		cursor: pointer;
+		transition:
+			background var(--transition),
+			box-shadow var(--transition);
 	}
 
 	.btn-secondary:disabled {
@@ -234,8 +238,13 @@
 	}
 
 	.btn-primary {
-		background: var(--color-primary, #2563eb);
+		background: var(--color-primary);
 		color: #ffffff;
+	}
+
+	.btn-primary:hover {
+		background: #1d4ed8;
+		box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
 	}
 
 	.btn-secondary {
@@ -247,10 +256,11 @@
 	.info-card,
 	.historial {
 		margin-bottom: 1.5rem;
-		padding: 1rem;
-		background: #ffffff;
-		border: 1px solid var(--color-border, #e2e8f0);
-		border-radius: 0.5rem;
+		padding: 1.5rem;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-card);
+		box-shadow: var(--shadow-sm);
 	}
 
 	.info-grid {

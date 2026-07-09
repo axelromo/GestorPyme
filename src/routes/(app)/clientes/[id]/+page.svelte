@@ -42,7 +42,7 @@
 		</div>
 	</header>
 
-	<div class="info-card">
+	<article class="info-card saas-section-card">
 		<h2>Información general</h2>
 		<dl class="info-grid">
 			<div><dt>Empresa</dt><dd>{mostrar(cliente.empresa)}</dd></div>
@@ -55,51 +55,59 @@
 				<div class="full"><dt>Notas</dt><dd>{cliente.notas}</dd></div>
 			{/if}
 		</dl>
-	</div>
+	</article>
 
-	<div class="cards-grid">
-		<DashboardCard titulo="Total facturado" valor={formatearMoneda(resumen.totalFacturado)} />
-		<DashboardCard titulo="Total cobrado" valor={formatearMoneda(resumen.totalCobrado)} />
-		<DashboardCard titulo="Saldo pendiente" valor={formatearMoneda(resumen.saldoPendiente)} />
-	</div>
-
-	<h2>Historial de cotizaciones</h2>
-	{#if data.cotizaciones.length === 0}
-		<EmptyState
-			titulo="Sin cotizaciones"
-			mensaje="Este cliente aún no tiene cotizaciones registradas."
-			icono="📄"
-		/>
-	{:else}
-		<div class="table-wrapper">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>Folio</th>
-						<th>Fecha</th>
-						<th>Estado</th>
-						<th>Total</th>
-						<th>Pagado</th>
-						<th>Saldo</th>
-					</tr>
-				</thead>
-				<tbody>
-					{#each data.cotizaciones as cotizacion (cotizacion.id)}
-						<tr>
-							<td>
-								<a class="folio-link" href="/cotizaciones/{cotizacion.id}">{cotizacion.folio}</a>
-							</td>
-							<td>{formatFecha(cotizacion.fecha)}</td>
-							<td>{cotizacion.estadoEtiqueta}</td>
-							<td>{formatearMoneda(cotizacion.total)}</td>
-							<td>{formatearMoneda(cotizacion.pagado)}</td>
-							<td>{formatearMoneda(cotizacion.saldo)}</td>
-						</tr>
-					{/each}
-				</tbody>
-			</table>
+	<section class="saas-section-card">
+		<h2>Resumen financiero</h2>
+		<div class="cards-grid">
+			<DashboardCard titulo="Total facturado" valor={formatearMoneda(resumen.totalFacturado)} />
+			<DashboardCard titulo="Total cobrado" valor={formatearMoneda(resumen.totalCobrado)} />
+			<DashboardCard
+				titulo="Saldo pendiente"
+				valor={formatearMoneda(resumen.saldoPendiente)}
+				destacado={resumen.saldoPendiente > 0}
+			/>
 		</div>
-	{/if}
+	</section>
+
+	<article class="saas-section-card">
+		<h2>Historial de cotizaciones</h2>
+		{#if data.cotizaciones.length === 0}
+			<EmptyState
+				titulo="Sin cotizaciones"
+				mensaje="Este cliente aún no tiene cotizaciones registradas."
+			/>
+		{:else}
+			<div class="table-wrapper">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Folio</th>
+							<th>Fecha</th>
+							<th>Estado</th>
+							<th>Total</th>
+							<th>Pagado</th>
+							<th>Saldo</th>
+						</tr>
+					</thead>
+					<tbody>
+						{#each data.cotizaciones as cotizacion (cotizacion.id)}
+							<tr>
+								<td>
+									<a class="folio-link" href="/cotizaciones/{cotizacion.id}">{cotizacion.folio}</a>
+								</td>
+								<td>{formatFecha(cotizacion.fecha)}</td>
+								<td>{cotizacion.estadoEtiqueta}</td>
+								<td>{formatearMoneda(cotizacion.total)}</td>
+								<td>{formatearMoneda(cotizacion.pagado)}</td>
+								<td class="saldo">{formatearMoneda(cotizacion.saldo)}</td>
+							</tr>
+						{/each}
+					</tbody>
+				</table>
+			</div>
+		{/if}
+	</article>
 </section>
 
 <style>
@@ -120,17 +128,19 @@
 
 	h1 {
 		margin: 0 0 0.25rem;
-		font-size: 1.5rem;
+		font-size: 1.625rem;
+		font-weight: 700;
 	}
 
 	h2 {
-		margin: 0;
-		font-size: 1.125rem;
+		margin: 0 0 1.25rem;
+		font-size: 1.0625rem;
+		font-weight: 600;
 	}
 
 	.description {
 		margin: 0;
-		color: var(--color-text-muted, #64748b);
+		color: var(--color-text-muted);
 		font-size: 0.875rem;
 	}
 
@@ -141,70 +151,14 @@
 		align-items: center;
 	}
 
-	.info-card {
-		padding: 1rem;
-		background: #ffffff;
-		border: 1px solid var(--color-border, #e2e8f0);
-		border-radius: 0.5rem;
-	}
-
-	.info-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-		gap: 1rem;
-		margin: 0;
-	}
-
-	dt {
-		font-size: 0.75rem;
-		font-weight: 600;
-		color: var(--color-text-muted, #64748b);
-	}
-
-	dd {
-		margin: 0.25rem 0 0;
-	}
-
-	.full {
-		grid-column: 1 / -1;
-	}
-
 	.cards-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
 		gap: 1rem;
 	}
 
-	.table-wrapper {
-		overflow-x: auto;
-		background: #ffffff;
-		border: 1px solid var(--color-border, #e2e8f0);
-		border-radius: 0.5rem;
-	}
-
-	.table {
-		width: 100%;
-		border-collapse: collapse;
-		font-size: 0.875rem;
-		min-width: 40rem;
-	}
-
-	.table th,
-	.table td {
-		padding: 0.75rem 1rem;
-		text-align: left;
-		border-bottom: 1px solid var(--color-border, #e2e8f0);
-	}
-
-	.table th {
-		font-weight: 600;
-		color: var(--color-text-muted, #64748b);
-		background: var(--color-sidebar, #f8fafc);
-	}
-
-	.folio-link {
-		color: var(--color-primary, #2563eb);
-		font-weight: 600;
-		text-decoration: none;
+	.saldo {
+		font-weight: 700;
+		color: var(--color-warning);
 	}
 </style>

@@ -5,10 +5,11 @@
 	/**
 	 * @type {{
 	 *   user: { nombre: string, email: string, imageUrl: string },
+	 *   nombreEmpresa?: string | null,
 	 *   children: import('svelte').Snippet
 	 * }}
 	 */
-	let { user, children } = $props();
+	let { user, nombreEmpresa = null, children } = $props();
 
 	let sidebarOpen = $state(false);
 
@@ -22,14 +23,14 @@
 </script>
 
 <div class="app-shell">
-	<Sidebar open={sidebarOpen} onClose={closeSidebar} />
+	<Sidebar open={sidebarOpen} onClose={closeSidebar} {nombreEmpresa} />
 
 	{#if sidebarOpen}
 		<button type="button" class="overlay" aria-label="Cerrar menú" onclick={closeSidebar}></button>
 	{/if}
 
 	<div class="app-main">
-		<Navbar {user} onMenuToggle={toggleSidebar} />
+		<Navbar {user} {nombreEmpresa} onMenuToggle={toggleSidebar} />
 
 		<main class="app-content">
 			{@render children()}
@@ -38,22 +39,9 @@
 </div>
 
 <style>
-	:global(:root) {
-		--sidebar-width: 16rem;
-		--navbar-height: 3.5rem;
-		--color-sidebar: #f8fafc;
-		--color-surface: #ffffff;
-		--color-surface-hover: #f1f5f9;
-		--color-border: #e2e8f0;
-		--color-text: #0f172a;
-		--color-text-muted: #64748b;
-		--color-primary: #2563eb;
-		--color-primary-soft: #eff6ff;
-	}
-
 	.app-shell {
 		min-height: 100dvh;
-		background: #f1f5f9;
+		background: var(--color-background);
 	}
 
 	.overlay {
@@ -62,7 +50,8 @@
 		z-index: 30;
 		border: none;
 		padding: 0;
-		background: rgba(15, 23, 42, 0.4);
+		background: rgba(15, 23, 42, 0.5);
+		backdrop-filter: blur(2px);
 		cursor: pointer;
 	}
 
@@ -75,6 +64,9 @@
 	.app-content {
 		flex: 1;
 		padding: 1.5rem 1rem;
+		max-width: 90rem;
+		width: 100%;
+		margin: 0 auto;
 	}
 
 	@media (min-width: 768px) {
@@ -87,7 +79,13 @@
 		}
 
 		.app-content {
-			padding: 1.5rem;
+			padding: 2rem 1.75rem;
+		}
+	}
+
+	@media (min-width: 1440px) {
+		.app-content {
+			padding: 2rem 2.5rem;
 		}
 	}
 </style>

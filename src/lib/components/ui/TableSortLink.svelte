@@ -22,7 +22,7 @@
 <a class="sort-link" class:activa {href}>
 	{etiqueta}
 	{#if activa}
-		<span>{direccionActual === 'asc' ? '↑' : '↓'}</span>
+		<span class="arrow">{direccionActual === 'asc' ? '↑' : '↓'}</span>
 	{/if}
 </a>
 
@@ -30,12 +30,23 @@
 	.sort-link {
 		display: inline-flex;
 		align-items: center;
-		gap: 0.25rem;
+		gap: 0.35rem;
 		color: inherit;
 		text-decoration: none;
+		transition: color var(--transition);
+	}
+
+	.sort-link:hover {
+		color: var(--color-primary);
 	}
 
 	.sort-link.activa {
-		color: var(--color-primary, #2563eb);
+		color: var(--color-primary-dark);
+		font-weight: 700;
+	}
+
+	.arrow {
+		font-size: 0.75rem;
+		opacity: 0.85;
 	}
 </style>

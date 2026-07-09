@@ -9,12 +9,14 @@
 
 <style>
 	.badge {
-		display: inline-block;
-		padding: 0.125rem 0.5rem;
+		display: inline-flex;
+		align-items: center;
+		padding: 0.25rem 0.75rem;
 		border-radius: 9999px;
 		font-size: 0.75rem;
 		font-weight: 600;
 		white-space: nowrap;
+		letter-spacing: 0.01em;
 	}
 
 	.badge-neutral {
@@ -23,22 +25,22 @@
 	}
 
 	.badge-success {
-		background: #dcfce7;
+		background: var(--color-success-soft);
 		color: #166534;
 	}
 
 	.badge-warning {
-		background: #fef3c7;
+		background: var(--color-warning-soft);
 		color: #b45309;
 	}
 
 	.badge-danger {
-		background: #fee2e2;
+		background: var(--color-danger-soft);
 		color: #991b1b;
 	}
 
 	.badge-info {
-		background: #dbeafe;
+		background: var(--color-primary-soft);
 		color: #1d4ed8;
 	}
 </style>

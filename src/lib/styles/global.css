@@ -1,0 +1,341 @@
+/* GestorPyme — Design System */
+
+:root {
+	--sidebar-width: 17rem;
+	--navbar-height: 4rem;
+
+	--color-primary: #2563eb;
+	--color-primary-dark: #1e3a8a;
+	--color-primary-soft: #eff6ff;
+	--color-sidebar: #0f172a;
+	--color-sidebar-hover: rgba(255, 255, 255, 0.06);
+	--color-sidebar-active: rgba(37, 99, 235, 0.2);
+	--color-background: #f8fafc;
+	--color-surface: #ffffff;
+	--color-surface-hover: #f1f5f9;
+	--color-border: #e2e8f0;
+	--color-text: #0f172a;
+	--color-text-muted: #64748b;
+	--color-success: #16a34a;
+	--color-success-soft: #dcfce7;
+	--color-warning: #f59e0b;
+	--color-warning-soft: #fef3c7;
+	--color-danger: #dc2626;
+	--color-danger-soft: #fee2e2;
+
+	--radius-sm: 0.5rem;
+	--radius-md: 0.75rem;
+	--radius-lg: 1.125rem;
+	--radius-card: 1.125rem;
+
+	--shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+	--shadow-md: 0 4px 16px rgba(15, 23, 42, 0.06);
+	--shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.1);
+
+	--transition: 0.2s ease;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body {
+	margin: 0;
+	font-family:
+		'Inter',
+		system-ui,
+		-apple-system,
+		BlinkMacSystemFont,
+		'Segoe UI',
+		sans-serif;
+	font-size: 0.9375rem;
+	line-height: 1.5;
+	color: var(--color-text);
+	background: var(--color-background);
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.02em;
+}
+
+a {
+	color: var(--color-primary);
+}
+
+/* ——— Formularios compartidos ——— */
+
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+	max-width: 36rem;
+	padding: 1.75rem;
+	background: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-card);
+	box-shadow: var(--shadow-sm);
+}
+
+.field {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.field label,
+.field-checkbox .checkbox-label {
+	font-size: 0.875rem;
+	font-weight: 600;
+	color: var(--color-text);
+}
+
+.field input,
+.field textarea,
+.field select,
+.filters input[type='search'],
+.filters select,
+.filters input[type='date'] {
+	padding: 0.75rem 1rem;
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-sm);
+	font: inherit;
+	color: var(--color-text);
+	background: var(--color-surface);
+	transition:
+		border-color var(--transition),
+		box-shadow var(--transition);
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus,
+.filters input[type='search']:focus,
+.filters select:focus,
+.filters input[type='date']:focus {
+	outline: none;
+	border-color: var(--color-primary);
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.field textarea {
+	min-height: 6rem;
+	resize: vertical;
+}
+
+.field-checkbox {
+	margin-top: 0.25rem;
+}
+
+.checkbox-label {
+	display: flex;
+	align-items: center;
+	gap: 0.625rem;
+	font-weight: 500;
+	cursor: pointer;
+}
+
+.checkbox-label input[type='checkbox'] {
+	width: 1.125rem;
+	height: 1.125rem;
+	accent-color: var(--color-primary);
+}
+
+.field .error,
+.form .error {
+	margin: 0;
+	font-size: 0.8125rem;
+	color: var(--color-danger);
+}
+
+.form .actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	margin-top: 0.5rem;
+}
+
+/* Enlaces estilo botón secundario (formularios legacy) */
+.btn-secondary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	padding: 0.75rem 1.25rem;
+	border-radius: var(--radius-sm);
+	font-size: 0.875rem;
+	font-weight: 600;
+	text-decoration: none;
+	cursor: pointer;
+	border: 1px solid var(--color-border);
+	background: var(--color-surface);
+	color: var(--color-text);
+	transition:
+		background var(--transition),
+		border-color var(--transition),
+		transform var(--transition);
+}
+
+.btn-secondary:hover {
+	background: var(--color-surface-hover);
+	border-color: #cbd5e1;
+}
+
+.btn-primary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	padding: 0.75rem 1.25rem;
+	border-radius: var(--radius-sm);
+	font-size: 0.875rem;
+	font-weight: 600;
+	text-decoration: none;
+	cursor: pointer;
+	border: 1px solid transparent;
+	background: var(--color-primary);
+	color: #ffffff;
+	transition:
+		background var(--transition),
+		transform var(--transition),
+		box-shadow var(--transition);
+}
+
+.btn-primary:hover {
+	background: #1d4ed8;
+	box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+/* ——— Tablas SaaS ——— */
+
+.table-wrapper {
+	overflow-x: auto;
+	background: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-md);
+	box-shadow: var(--shadow-sm);
+}
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.875rem;
+}
+
+.table th,
+.table td {
+	padding: 1rem 1.25rem;
+	text-align: left;
+	border-bottom: 1px solid var(--color-border);
+}
+
+.table th {
+	font-size: 0.75rem;
+	font-weight: 600;
+	color: var(--color-primary-dark);
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	background: var(--color-primary-soft);
+	white-space: nowrap;
+}
+
+.table tbody tr {
+	transition: background var(--transition);
+}
+
+.table tbody tr:hover {
+	background: #f8fafc;
+}
+
+.table tbody tr:last-child td {
+	border-bottom: none;
+}
+
+.folio-link,
+.table a:not(.btn) {
+	color: var(--color-primary);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.folio-link:hover,
+.table a:not(.btn):hover {
+	text-decoration: underline;
+}
+
+/* ——— Encabezados de página ——— */
+
+.page-header h1,
+.toolbar h1,
+.dashboard-header h1,
+.toolbar-title {
+	margin: 0 0 0.25rem;
+	font-size: 1.625rem;
+	font-weight: 700;
+	color: var(--color-text);
+}
+
+.page-header .description,
+.toolbar .description,
+.dashboard-header .description,
+.toolbar-description {
+	margin: 0;
+	color: var(--color-text-muted);
+	font-size: 0.875rem;
+}
+
+/* ——— Tarjetas de sección ——— */
+
+.info-card,
+.saas-section-card {
+	padding: 1.5rem;
+	background: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-card);
+	box-shadow: var(--shadow-sm);
+}
+
+.info-card h2,
+.saas-section-card h2 {
+	margin: 0 0 1.25rem;
+	font-size: 1.0625rem;
+	font-weight: 600;
+}
+
+.info-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+	gap: 1.25rem;
+	margin: 0;
+}
+
+.info-grid dt {
+	font-size: 0.75rem;
+	font-weight: 600;
+	color: var(--color-text-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.info-grid dd {
+	margin: 0.35rem 0 0;
+	font-weight: 500;
+}
+
+.info-grid .full {
+	grid-column: 1 / -1;
+}
+
+/* ——— KPI destacado (cobranza) ——— */
+
+.kpi-destacado .card.destacado {
+	border-color: #bfdbfe;
+}

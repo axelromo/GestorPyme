@@ -102,88 +102,12 @@
 
 <style>
 	.form {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		max-width: 32rem;
-		padding: 1.5rem;
-		background: var(--color-surface, #ffffff);
-		border: 1px solid var(--color-border, #e2e8f0);
-		border-radius: 0.5rem;
-	}
-
-	.field {
-		display: flex;
-		flex-direction: column;
-		gap: 0.375rem;
-	}
-
-	label {
-		font-size: 0.875rem;
-		font-weight: 600;
-		color: var(--color-text, #0f172a);
-	}
-
-	input,
-	textarea {
-		padding: 0.625rem 0.75rem;
-		border: 1px solid var(--color-border, #e2e8f0);
-		border-radius: 0.375rem;
-		font: inherit;
-		color: var(--color-text, #0f172a);
-		background: #ffffff;
-	}
-
-	input:focus,
-	textarea:focus {
-		outline: 2px solid var(--color-primary-soft, #eff6ff);
-		border-color: var(--color-primary, #2563eb);
-	}
-
-	.field-checkbox {
-		margin-top: 0.25rem;
-	}
-
-	.checkbox-label {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		font-weight: 500;
-	}
-
-	.checkbox-label input {
-		width: 1rem;
-		height: 1rem;
-	}
-
-	.error {
-		margin: 0;
-		font-size: 0.8125rem;
-		color: #dc2626;
+		max-width: 36rem;
 	}
 
 	.actions {
 		display: flex;
 		gap: 0.75rem;
 		margin-top: 0.5rem;
-	}
-
-	.btn-secondary {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		padding: 0.625rem 1rem;
-		border-radius: 0.375rem;
-		font-size: 0.875rem;
-		font-weight: 600;
-		text-decoration: none;
-		cursor: pointer;
-		border: 1px solid var(--color-border, #e2e8f0);
-		background: var(--color-surface, #ffffff);
-		color: var(--color-text, #0f172a);
-	}
-
-	.btn-secondary:hover {
-		background: var(--color-surface-hover, #f1f5f9);
 	}
 </style>

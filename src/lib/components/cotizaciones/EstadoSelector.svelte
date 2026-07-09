@@ -58,42 +58,26 @@
 	.estado-final {
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
-		padding: 1rem;
-		background: var(--color-surface, #ffffff);
-		border: 1px solid var(--color-border, #e2e8f0);
-		border-radius: 0.5rem;
+		gap: 1.25rem;
+		padding: 1.5rem;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-card);
+		box-shadow: var(--shadow-sm);
 	}
 
 	.estado-actual,
 	.estado-final {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
+		gap: 0.625rem;
 		flex-wrap: wrap;
-	}
-
-	.field {
-		display: flex;
-		flex-direction: column;
-		gap: 0.375rem;
-	}
-
-	label {
-		font-size: 0.875rem;
-		font-weight: 600;
-	}
-
-	select {
-		padding: 0.625rem 0.75rem;
-		border: 1px solid var(--color-border, #e2e8f0);
-		border-radius: 0.375rem;
-		font: inherit;
+		font-weight: 500;
 	}
 
 	.estado-final p {
 		margin: 0;
-		color: var(--color-text-muted, #64748b);
+		color: var(--color-text-muted);
 		font-size: 0.875rem;
 	}
 </style>

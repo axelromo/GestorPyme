@@ -71,7 +71,7 @@
 							<input type="hidden" name="id" value={fila.id} />
 							<Button
 								type="submit"
-								variant="secondary"
+								variant="success"
 								loading={enviandoId === fila.id}
 								disabled={!fila.clienteEmail?.trim()}
 								title={fila.clienteEmail?.trim()
@@ -91,45 +91,6 @@
 <style>
 	.table-wrapper {
 		overflow-x: auto;
-		background: #ffffff;
-		border: 1px solid var(--color-border, #e2e8f0);
-		border-radius: 0.5rem;
-	}
-
-	.table {
-		width: 100%;
-		border-collapse: collapse;
-		font-size: 0.875rem;
-		min-width: 56rem;
-	}
-
-	.table th,
-	.table td {
-		padding: 0.75rem 1rem;
-		text-align: left;
-		border-bottom: 1px solid var(--color-border, #e2e8f0);
-	}
-
-	.table th {
-		font-weight: 600;
-		color: var(--color-text-muted, #64748b);
-		background: var(--color-sidebar, #f8fafc);
-		white-space: nowrap;
-	}
-
-	.table tbody tr:last-child td {
-		border-bottom: none;
-	}
-
-	.saldo {
-		font-weight: 700;
-		color: #b45309;
-	}
-
-	.folio-link {
-		color: var(--color-primary, #2563eb);
-		font-weight: 600;
-		text-decoration: none;
 	}
 
 	.acciones {

@@ -22,7 +22,7 @@
 	/** @type {Chart | null} */
 	let grafica = null;
 
-	const COLORES_ESTADO = ['#475569', '#2563eb', '#16a34a', '#dc2626', '#7c3aed', '#0d9488'];
+	const COLORES_ESTADO = ['#64748B', '#2563EB', '#16A34A', '#DC2626', '#7C3AED', '#0D9488'];
 
 	const coloresGrafica = $derived(colores.length > 0 ? colores : COLORES_ESTADO);
 
@@ -53,8 +53,8 @@
 					{
 						label: titulo,
 						data: valores,
-						backgroundColor: tipo === 'doughnut' ? paleta : 'rgba(37, 99, 235, 0.7)',
-						borderColor: tipo === 'doughnut' ? '#ffffff' : 'rgba(37, 99, 235, 1)',
+						backgroundColor: tipo === 'doughnut' ? paleta : 'rgba(37, 99, 235, 0.85)',
+						borderColor: tipo === 'doughnut' ? '#ffffff' : 'rgba(30, 58, 138, 0.9)',
 						borderWidth: tipo === 'doughnut' ? 2 : 1,
 						borderRadius: tipo === 'bar' ? 6 : 0
 					}
@@ -66,15 +66,25 @@
 				plugins: {
 					legend: {
 						display: tipo === 'doughnut',
-						position: 'bottom'
+						position: 'bottom',
+						labels: {
+							padding: 16,
+							usePointStyle: true,
+							font: { family: 'Inter, sans-serif', size: 12 }
+						}
 					}
 				},
 				scales:
 					tipo === 'bar'
 						? {
+								x: {
+									grid: { display: false },
+									ticks: { font: { family: 'Inter, sans-serif', size: 11 } }
+								},
 								y: {
 									beginAtZero: true,
-									ticks: { precision: 0 }
+									ticks: { precision: 0, font: { family: 'Inter, sans-serif', size: 11 } },
+									grid: { color: '#f1f5f9' }
 								}
 							}
 						: undefined
@@ -105,11 +115,16 @@
 
 <style>
 	.chart-card {
-		padding: 1.25rem;
-		background: #ffffff;
-		border: 1px solid var(--color-border, #e2e8f0);
-		border-radius: 0.75rem;
-		box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+		padding: 1.5rem;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-card);
+		box-shadow: var(--shadow-sm);
+		transition: box-shadow var(--transition);
+	}
+
+	.chart-card:hover {
+		box-shadow: var(--shadow-md);
 	}
 
 	h2 {

@@ -16,7 +16,7 @@
 		<p class="vacio">{vacio}</p>
 	{:else}
 		<div class="table-wrapper">
-			<table>
+			<table class="table">
 				<thead>
 					<tr>
 						{#each columnas as columna (columna.clave)}
@@ -46,63 +46,34 @@
 
 <style>
 	.widget {
-		padding: 1.25rem;
-		background: #ffffff;
-		border: 1px solid var(--color-border, #e2e8f0);
-		border-radius: 0.75rem;
-		box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+		padding: 1.5rem;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-card);
+		box-shadow: var(--shadow-sm);
+		transition: box-shadow var(--transition);
+	}
+
+	.widget:hover {
+		box-shadow: var(--shadow-md);
 	}
 
 	h2 {
-		margin: 0 0 1rem;
+		margin: 0 0 1.25rem;
 		font-size: 1rem;
 		font-weight: 600;
+		color: var(--color-text);
 	}
 
 	.vacio {
 		margin: 0;
-		color: var(--color-text-muted, #64748b);
+		color: var(--color-text-muted);
 		font-size: 0.875rem;
-	}
-
-	.table-wrapper {
-		overflow-x: auto;
-	}
-
-	table {
-		width: 100%;
-		border-collapse: collapse;
-		font-size: 0.875rem;
-	}
-
-	th,
-	td {
-		padding: 0.625rem 0.5rem;
-		text-align: left;
-		border-bottom: 1px solid var(--color-border, #e2e8f0);
-	}
-
-	th {
-		font-size: 0.75rem;
-		font-weight: 600;
-		color: var(--color-text-muted, #64748b);
-		text-transform: uppercase;
-		letter-spacing: 0.03em;
-	}
-
-	tr:last-child td {
-		border-bottom: none;
 	}
 
 	.align-right,
 	td.align-right,
 	th.align-right {
 		text-align: right;
-	}
-
-	a {
-		color: var(--color-primary, #2563eb);
-		font-weight: 600;
-		text-decoration: none;
 	}
 </style>

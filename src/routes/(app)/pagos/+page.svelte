@@ -33,7 +33,7 @@
 			<h1>Pagos</h1>
 			<p class="description">Listado de pagos registrados en el sistema.</p>
 		</div>
-		<Button href="/pagos/nuevo" variant="primary">+ Registrar pago</Button>
+		<Button href="/pagos/nuevo" variant="success">+ Registrar pago</Button>
 	</div>
 
 	{#if mensajeExito}

@@ -36,6 +36,7 @@
 		titulo="Cartera pendiente"
 		valor={formatearMoneda(data.carteraPendiente)}
 		descripcion="Suma de saldos por cobrar"
+		destacado={true}
 	/>
 
 	{#if data.filas.length === 0}

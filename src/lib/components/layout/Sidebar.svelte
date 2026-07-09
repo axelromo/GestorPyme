@@ -1,8 +1,9 @@
 <script>
 	import { page } from '$app/state';
+	import { NAV_ICONS } from './nav-icons.js';
 
-	/** @type {{ open: boolean, onClose: () => void }} */
-	let { open = false, onClose = () => {} } = $props();
+	/** @type {{ open: boolean, onClose: () => void, nombreEmpresa?: string | null }} */
+	let { open = false, onClose = () => {}, nombreEmpresa = null } = $props();
 
 	const navItems = [
 		{ href: '/dashboard', label: 'Dashboard' },
@@ -29,8 +30,20 @@
 </script>
 
 <aside class="sidebar" class:open aria-label="Navegación principal">
-	<div class="sidebar-header">
-		<span class="brand">GestorPyme</span>
+	<div class="sidebar-brand">
+		<div class="logo" aria-hidden="true">
+			<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<rect width="32" height="32" rx="8" fill="#2563EB" />
+				<path
+					d="M8 22V10h4.2l3.4 7.2L19 10h4v12h-3.2v-7.4L15.8 22h-2.6L10.2 14.6V22H8Z"
+					fill="white"
+				/>
+			</svg>
+		</div>
+		<div class="brand-text">
+			<span class="brand-name">GestorPyme</span>
+			<span class="brand-sub">{nombreEmpresa?.trim() || 'Panel de gestión'}</span>
+		</div>
 		<button type="button" class="close-btn" aria-label="Cerrar menú" onclick={onClose}>×</button>
 	</div>
 
@@ -39,7 +52,8 @@
 			{#each navItems as item (item.href)}
 				<li>
 					<a href={item.href} class:active={isActive(item.href)}>
-						{item.label}
+						<span class="nav-icon">{@html NAV_ICONS[item.href]}</span>
+						<span class="nav-label">{item.label}</span>
 					</a>
 				</li>
 			{/each}
@@ -58,27 +72,54 @@
 		width: var(--sidebar-width);
 		height: 100dvh;
 		background: var(--color-sidebar);
-		border-right: 1px solid var(--color-border);
+		border-right: 1px solid rgba(255, 255, 255, 0.06);
 		transform: translateX(-100%);
-		transition: transform 0.2s ease;
+		transition: transform 0.25s ease;
 	}
 
 	.sidebar.open {
 		transform: translateX(0);
 	}
 
-	.sidebar-header {
+	.sidebar-brand {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
-		padding: 1rem 1.25rem;
-		border-bottom: 1px solid var(--color-border);
+		gap: 0.875rem;
+		padding: 1.25rem 1.25rem 1rem;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 	}
 
-	.brand {
-		font-size: 1.125rem;
+	.logo {
+		flex-shrink: 0;
+		width: 2.25rem;
+		height: 2.25rem;
+	}
+
+	.logo svg {
+		width: 100%;
+		height: 100%;
+	}
+
+	.brand-text {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+		flex: 1;
+	}
+
+	.brand-name {
+		font-size: 1.0625rem;
 		font-weight: 700;
-		color: var(--color-text);
+		color: #ffffff;
+		letter-spacing: -0.02em;
+	}
+
+	.brand-sub {
+		font-size: 0.75rem;
+		color: rgba(255, 255, 255, 0.55);
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	.close-btn {
@@ -88,45 +129,71 @@
 		width: 2rem;
 		height: 2rem;
 		border: none;
-		border-radius: 0.375rem;
+		border-radius: var(--radius-sm);
 		background: transparent;
-		color: var(--color-text-muted);
+		color: rgba(255, 255, 255, 0.6);
 		font-size: 1.5rem;
 		line-height: 1;
 		cursor: pointer;
+		transition: background var(--transition);
 	}
 
 	.close-btn:hover {
-		background: var(--color-surface-hover);
+		background: var(--color-sidebar-hover);
+		color: #ffffff;
+	}
+
+	.sidebar-nav {
+		flex: 1;
+		padding: 1rem 0.75rem;
+		overflow-y: auto;
 	}
 
 	.sidebar-nav ul {
 		list-style: none;
 		margin: 0;
-		padding: 0.75rem;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
 	}
 
 	.sidebar-nav a {
-		display: block;
-		padding: 0.625rem 0.875rem;
-		border-radius: 0.375rem;
-		color: var(--color-text-muted);
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.75rem 1rem;
+		border-radius: var(--radius-sm);
+		color: rgba(255, 255, 255, 0.65);
 		text-decoration: none;
 		font-size: 0.9375rem;
 		font-weight: 500;
 		transition:
-			background 0.15s ease,
-			color 0.15s ease;
+			background var(--transition),
+			color var(--transition);
 	}
 
 	.sidebar-nav a:hover {
-		background: var(--color-surface-hover);
-		color: var(--color-text);
+		background: var(--color-sidebar-hover);
+		color: #ffffff;
 	}
 
 	.sidebar-nav a.active {
-		background: var(--color-primary-soft);
-		color: var(--color-primary);
+		background: var(--color-sidebar-active);
+		color: #ffffff;
+		box-shadow: inset 3px 0 0 var(--color-primary);
+	}
+
+	.nav-icon {
+		display: flex;
+		width: 1.25rem;
+		height: 1.25rem;
+		flex-shrink: 0;
+	}
+
+	.nav-icon :global(svg) {
+		width: 100%;
+		height: 100%;
 	}
 
 	@media (min-width: 768px) {
