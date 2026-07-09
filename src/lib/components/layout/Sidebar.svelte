@@ -1,4 +1,5 @@
 <script>
+	import { untrack } from 'svelte';
 	import { page } from '$app/state';
 	import { SignOutButton } from 'svelte-clerk';
 	import { NAV_ICONS } from './nav-icons.js';
@@ -15,11 +16,15 @@
 		{ href: '/configuracion', label: 'Configuración' }
 	];
 
+	// Cierra el drawer solo al cambiar de ruta, no al abrirlo.
 	$effect(() => {
 		page.url.pathname;
-		if (open) {
-			onClose();
-		}
+
+		untrack(() => {
+			if (open) {
+				onClose();
+			}
+		});
 	});
 
 	/**
@@ -30,7 +35,7 @@
 	}
 </script>
 
-<aside class="sidebar" class:open aria-label="Navegación principal">
+<aside id="sidebar-drawer" class="sidebar" class:open aria-label="Navegación principal">
 	<div class="sidebar-brand">
 		<div class="logo" aria-hidden="true">
 			<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">

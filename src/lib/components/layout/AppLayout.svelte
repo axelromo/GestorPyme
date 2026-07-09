@@ -37,7 +37,7 @@
 	{/if}
 
 	<div class="app-main">
-		<Navbar {user} {nombreEmpresa} onMenuToggle={toggleSidebar} />
+		<Navbar {user} {nombreEmpresa} onMenuToggle={toggleSidebar} menuOpen={sidebarOpen} />
 
 		{#key page.url.pathname}
 			<main class="app-content page-enter" id="contenido-principal">

@@ -5,14 +5,22 @@
 	 * @type {{
 	 *   user: { nombre: string, email: string, imageUrl: string },
 	 *   onMenuToggle: () => void,
+	 *   menuOpen?: boolean,
 	 *   nombreEmpresa?: string | null
 	 * }}
 	 */
-	let { user, onMenuToggle = () => {}, nombreEmpresa = null } = $props();
+	let { user, onMenuToggle = () => {}, menuOpen = false, nombreEmpresa = null } = $props();
 </script>
 
 <header class="navbar" aria-label="Barra de navegación">
-	<button type="button" class="menu-btn" aria-label="Abrir menú" onclick={onMenuToggle}>
+	<button
+		type="button"
+		class="menu-btn"
+		aria-label="Abrir menú de navegación"
+		aria-expanded={menuOpen}
+		aria-controls="sidebar-drawer"
+		onclick={onMenuToggle}
+	>
 		<span></span>
 		<span></span>
 		<span></span>
@@ -93,6 +101,7 @@
 
 	.menu-btn span {
 		display: block;
+		width: 100%;
 		height: 2px;
 		background: var(--color-text);
 		border-radius: 1px;
@@ -267,6 +276,10 @@
 	}
 
 	@media (max-width: 767px) {
+		.menu-btn {
+			display: flex;
+		}
+
 		.navbar-empresa {
 			display: none;
 		}
